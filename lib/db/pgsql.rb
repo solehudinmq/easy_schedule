@@ -1,6 +1,7 @@
 require 'pg'
 
 class Pgsql
+  # setup connection db
   def initialize(db_url)
     begin
       @connection = PG::Connection.new( db_url )
@@ -12,6 +13,7 @@ class Pgsql
     end
   end
 
+  # create type and table
   def db_setup
     # 1. type setup = create or exist type in db
     # value as
@@ -36,7 +38,8 @@ class Pgsql
       key varchar(200) NOT NULL,
       value varchar(200) NOT NULL,
       value_as value_as,
-      PRIMARY KEY (id)
+      PRIMARY KEY (id),
+      constraint unique_key unique (key)
     )")
 
     # subjects
@@ -92,6 +95,16 @@ class Pgsql
     )")
   end
 
+  # insert config data
+  def config_seed(subject_name, limit_schedule, timezone)
+    # config 1
+    insert_data('configs', "(key, value, value_as)", "('subject_name', '#{subject_name}', 'STRING')")
+    # config 2
+    insert_data('configs', "(key, value, value_as)", "('limit_schedule', '#{limit_schedule}', 'INTEGER')")
+    # config 3
+    insert_data('configs', "(key, value, value_as)", "('timezone', '#{timezone}', 'STRING')")
+  end
+
   private
     def type_setup(name, values)
       pgsql_exec("DO $$
@@ -105,6 +118,10 @@ class Pgsql
 
     def table_setup(name, values)
       pgsql_exec("CREATE TABLE IF NOT EXISTS #{name} #{values}")
+    end
+
+    def insert_data(selection_table, keys, values)
+      pgsql_exec("INSERT INTO #{selection_table}#{keys} VALUES #{values};")
     end
 
     def pgsql_exec(query)
