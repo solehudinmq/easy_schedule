@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.description = "Easy and flexible scheduling, with weekly and daily scheduling features"
   s.authors = ["Solehudin MQ"]
   s.email = "solehudinmq@gmail.com"
-  s.files = ["lib/easy_schedule.rb", "lib/setup_db/pgsql.rb"]
+  s.files = ["lib/easy_schedule.rb", "lib/db/pgsql.rb"]
   s.homepage  = "https://rubygems.org/gems/easy_schedule"
   s.license = "MIT"
   s.required_ruby_version = ">= 2.5.0"

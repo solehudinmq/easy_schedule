@@ -1,5 +1,5 @@
 require 'byebug'
-require_relative "setup_db/pgsql"
+require_relative "db/pgsql"
 
 class EasySchedule
   def self.connect_db(db_url)
