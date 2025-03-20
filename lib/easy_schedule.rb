@@ -23,7 +23,21 @@ class EasySchedule
   # insert bulk data into table subjects 
   # 1. bulk_data (required) : bulk subject data to be inserted into the database
   #    example : [{ name: 'Tono', phone_number: '+62xxxxxxxxxxxx', gender: 'MALE' }, { name: 'Indah', phone_number: '+62xxxxxxxxxxxx', gender: 'FEMALE' }]
-  def add_bulk_subject(bulk_data)
-    @connection.add_bulk_subject(bulk_data)
+  def insert_bulk_data_subject(bulk_data)
+    @connection.insert_bulk_data_subject(bulk_data)
+  end
+
+  # insert bulk data into table schedules 
+  # 1. bulk_data (required) : bulk schedule data to be inserted into the database
+  #    example : [{ day: 'MONDAY', start_schedule: '10 AM', end_schedule: '11 AM' }, { day: 'MONDAY', start_schedule: '2 PM', end_schedule: '4 PM' }]
+  #    description : 
+  #     - day = day is the name of the day
+  #       example = 'SUNDAY' / 'MONDAY' / 'TUESDAY' / 'WEDNESDAY' / 'THURSDAY' / 'FRIDAY' / 'SATURDAY'
+  #     - start_schedule = start_schedule is the schedule start time
+  #       example = '1 AM' / '2 AM' / '3 AM' / '4 AM' / '5 AM' / '6 AM' / '7 AM' / '8 AM' / '9 AM' / '10 AM' / '11 AM' / '12 AM' / '1 PM' / '2 PM' / '3 PM' / '4 PM' / '5 PM' / '6 PM' / '7 PM' / '8 PM' / '9 PM' / '10 PM' / '11 PM' / '12 PM'
+  #     - end_schedule = end_schedule is the schedule end time
+  #       example = '1 AM' / '2 AM' / '3 AM' / '4 AM' / '5 AM' / '6 AM' / '7 AM' / '8 AM' / '9 AM' / '10 AM' / '11 AM' / '12 AM' / '1 PM' / '2 PM' / '3 PM' / '4 PM' / '5 PM' / '6 PM' / '7 PM' / '8 PM' / '9 PM' / '10 PM' / '11 PM' / '12 PM'
+  def insert_bulk_data_schedule(bulk_data)
+    @connection.insert_bulk_data_schedule(bulk_data)
   end
 end

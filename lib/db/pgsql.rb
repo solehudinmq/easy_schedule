@@ -1,4 +1,5 @@
 require 'pg'
+require 'byebug'
 
 class Pgsql
   # setup connection db
@@ -62,7 +63,8 @@ class Pgsql
       end_schedule schedule_time,
       time_zone varchar(100) NOT NULL,
       inactive_date DATE,
-      PRIMARY KEY (id)
+      PRIMARY KEY (id),
+      constraint unique_day_schedule unique (day, start_schedule, end_schedule, time_zone)
     )")
 
     # announcements
@@ -103,23 +105,15 @@ class Pgsql
   end
 
   # insert bulk data into table subjects
-  def add_bulk_subject(bulk_data)
-    raise 'Bulk data must be an array' unless bulk_data.is_a?(Array)
-    raise 'Bulk data should not be blank' if bulk_data.length < 1
+  def insert_bulk_data_subject(bulk_data)
+    insert_bulk_data(bulk_data, 'subjects', '(name, phone_number, gender)')
+  end
 
-    insert_datas = ""
-    last_data = bulk_data.length - 1
-    bulk_data.each_with_index do |data, idx|
-      temp_data = "('#{data[:name]}', '#{data[:phone_number]}', '#{data[:gender]}')"
+  # insert bulk data into table schedules
+  def insert_bulk_data_schedule(bulk_data)
+    bulk_data.map {|data| data[:time_zone] = 'Asia/jakarta' }
 
-      if idx < last_data
-        temp_data += ', '
-      end
-
-      insert_datas += temp_data
-    end
-
-    insert_data('subjects', "(name, phone_number, gender)", "#{insert_datas}")
+    insert_bulk_data(bulk_data, 'schedules', '(day, start_schedule, end_schedule, time_zone)')
   end
 
   private
@@ -142,6 +136,26 @@ class Pgsql
     # insert data to table
     def insert_data(selection_table, keys, values)
       pgsql_exec("INSERT INTO #{selection_table}#{keys} VALUES #{values};")
+    end
+
+    # insert bulk data to table
+    def insert_bulk_data(bulk_data, table_name, table_keys)
+      raise 'Bulk data must be an array' unless bulk_data.is_a?(Array)
+      raise 'Bulk data should not be blank' if bulk_data.length < 1
+
+      insert_datas = ""
+      last_data = bulk_data.length - 1
+      bulk_data.each_with_index do |data, idx|
+        temp_data = "(#{data.values.map {|x| "'#{x}'"} * ', '})"
+
+        if idx < last_data
+          temp_data += ', '
+        end
+
+        insert_datas += temp_data
+      end
+
+      insert_data("#{table_name}", "#{table_keys}", "#{insert_datas}")
     end
 
     # pgsql response
