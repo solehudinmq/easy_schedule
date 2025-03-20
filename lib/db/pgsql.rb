@@ -8,8 +8,9 @@ class Pgsql
 
       db_setup
     rescue PG::Error => err
-      puts "Pgsql database error connection : #{err.message}"
       @connection.reset
+
+      raise "Pgsql database error connection : #{err.message}"
     end
   end
 
@@ -49,7 +50,8 @@ class Pgsql
       phone_number varchar(50) NOT NULL,
       gender gender,
       terminate_date DATE,
-      PRIMARY KEY (id)
+      PRIMARY KEY (id),
+      constraint unique_phone_number unique (phone_number)
     )")
 
     # schedules
@@ -95,17 +97,33 @@ class Pgsql
     )")
   end
 
-  # insert config data
+  # input data into table configs
   def config_seed(subject_name, limit_schedule, timezone)
-    # config 1
-    insert_data('configs', "(key, value, value_as)", "('subject_name', '#{subject_name}', 'STRING')")
-    # config 2
-    insert_data('configs', "(key, value, value_as)", "('limit_schedule', '#{limit_schedule}', 'INTEGER')")
-    # config 3
-    insert_data('configs', "(key, value, value_as)", "('timezone', '#{timezone}', 'STRING')")
+    insert_data('configs', "(key, value, value_as)", "('subject_name', '#{subject_name}', 'STRING'), ('limit_schedule', '#{limit_schedule}', 'INTEGER'), ('timezone', '#{timezone}', 'STRING')")
+  end
+
+  # insert bulk data into table subjects
+  def add_bulk_subject(bulk_data)
+    raise 'Bulk data must be an array' unless bulk_data.is_a?(Array)
+    raise 'Bulk data should not be blank' if bulk_data.length < 1
+
+    insert_datas = ""
+    last_data = bulk_data.length - 1
+    bulk_data.each_with_index do |data, idx|
+      temp_data = "('#{data[:name]}', '#{data[:phone_number]}', '#{data[:gender]}')"
+
+      if idx < last_data
+        temp_data += ', '
+      end
+
+      insert_datas += temp_data
+    end
+
+    insert_data('subjects', "(name, phone_number, gender)", "#{insert_datas}")
   end
 
   private
+  # setup data type
     def type_setup(name, values)
       pgsql_exec("DO $$
         BEGIN
@@ -116,14 +134,17 @@ class Pgsql
       $$;")
     end
 
+    # setup data table
     def table_setup(name, values)
       pgsql_exec("CREATE TABLE IF NOT EXISTS #{name} #{values}")
     end
 
+    # insert data to table
     def insert_data(selection_table, keys, values)
       pgsql_exec("INSERT INTO #{selection_table}#{keys} VALUES #{values};")
     end
 
+    # pgsql response
     def pgsql_exec(query)
       @connection.exec(query) do |result|
         puts "STATUS : #{result.res_status}"
