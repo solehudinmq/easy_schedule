@@ -111,9 +111,15 @@ class Pgsql
 
   # insert bulk data into table schedules
   def insert_bulk_data_schedule(bulk_data)
-    bulk_data.map {|data| data[:time_zone] = 'Asia/jakarta' }
+    timezone_data = timezone_config || 'Asia/jakarta'
+    bulk_data.map {|data| data[:time_zone] = timezone_data }
 
     insert_bulk_data(bulk_data, 'schedules', '(day, start_schedule, end_schedule, time_zone)')
+  end
+
+  # get timezone data from config
+  def timezone_config
+    get_data("SELECT value FROM configs WHERE key='timezone' LIMIT 1")
   end
 
   private
@@ -165,5 +171,9 @@ class Pgsql
         puts "SUCCESS MESSAGE : #{result.result_status}"
         puts "ERROR MESSAGE : #{result.result_error_message}"
       end
+    end
+
+    def get_data(query)
+      @connection.exec(query).getvalue(0,0)
     end
 end
