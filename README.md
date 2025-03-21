@@ -201,7 +201,7 @@ If you want to see the schedules data, then do this :
 
 Example :
 
-connection.schedule_list
+> connection.schedule_list
 
 or
 
