@@ -119,7 +119,35 @@ class Pgsql
 
   # get timezone data from config
   def timezone_config
-    get_data("SELECT value FROM configs WHERE key='timezone' LIMIT 1")
+    get_data("SELECT value FROM configs WHERE key='timezone' LIMIT 1").flatten[0]
+  end
+
+  # get subjects data
+  def subject_list(page, limit)
+    offset, limit = ofset_limit(page, limit)
+
+    result = get_data("SELECT id, name, phone_number, terminate_date FROM subjects LIMIT #{limit} OFFSET #{offset}")
+    subjects = []
+    result.each do |res|
+      temp_subject = { id: res[0], name: res[1], phone_number: res[2], terminate_date: res[3] }
+      subjects.push(temp_subject)
+    end
+
+    subjects
+  end
+
+  # get schedules data
+  def schedule_list(page, limit)
+    offset, limit = ofset_limit(page, limit)
+    
+    result = get_data("SELECT id, day, start_schedule, end_schedule, time_zone, inactive_date FROM schedules LIMIT #{limit} OFFSET #{offset}")
+    schedules = []
+    result.each do |res|
+      temp_schedule = { id: res[0], day: res[1], start_schedule: res[2], end_schedule: res[3], time_zone: res[4], inactive_date: res[5] }
+      schedules.push(temp_schedule)
+    end
+
+    schedules
   end
 
   private
@@ -173,7 +201,18 @@ class Pgsql
       end
     end
 
+    # select data response
     def get_data(query)
-      @connection.exec(query).getvalue(0,0)
+      @connection.exec(query).values
+    end
+
+    # get offset & limit for pagination
+    def ofset_limit(page, limit)
+      offset = 0
+      if page > 1
+        offset = (page * limit) - limit
+      end
+
+      [offset, limit]
     end
 end

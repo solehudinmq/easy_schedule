@@ -27,6 +27,15 @@ class EasySchedule
     @connection.insert_bulk_data_subject(bulk_data)
   end
 
+  # get subjects data with pagination
+  # 1. page (optional) = page is the data on which page you want to appear
+  #    example = 2 (default 1 if not filled in)
+  # 2. limit (optional) = limit is the amount of data you want to display
+  #    example = 5 (default 10 if not filled in)
+  def subject_list(page=1, limit=10)
+    @connection.subject_list(page, limit)
+  end
+
   # insert bulk data into table schedules 
   # 1. bulk_data (required) : bulk schedule data to be inserted into the database
   #    example : [{ day: 'MONDAY', start_schedule: '10 AM', end_schedule: '11 AM' }, { day: 'MONDAY', start_schedule: '2 PM', end_schedule: '4 PM' }]
@@ -39,5 +48,14 @@ class EasySchedule
   #       example = '1 AM' / '2 AM' / '3 AM' / '4 AM' / '5 AM' / '6 AM' / '7 AM' / '8 AM' / '9 AM' / '10 AM' / '11 AM' / '12 AM' / '1 PM' / '2 PM' / '3 PM' / '4 PM' / '5 PM' / '6 PM' / '7 PM' / '8 PM' / '9 PM' / '10 PM' / '11 PM' / '12 PM'
   def insert_bulk_data_schedule(bulk_data)
     @connection.insert_bulk_data_schedule(bulk_data)
+  end
+
+  # get schedules data with pagination
+  # 1. page (optional) = page is the data on which page you want to appear
+  #    example = 2 (default 1 if not filled in)
+  # 2. limit (optional) = limit is the amount of data you want to display
+  #    example = 5 (default 10 if not filled in)
+  def schedule_list(page=1, limit=10)
+    @connection.schedule_list(page, limit)
   end
 end
