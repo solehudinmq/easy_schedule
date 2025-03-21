@@ -10,7 +10,7 @@ class EasySchedule
   end
 
   # if the config data does not exist, please run this method to create the config data.
-  # 1. subject_name (required) : 'subject' is the name of the schedule, for example the subject is 'Doctor' then it will be considered as the 'Doctor's schedule'
+  # 1. subject_name (required) : 'subject_name' is the name of the schedule, for example the subject is 'Doctor' then it will be considered as the 'Doctor's schedule'
   #    example = 'Doctor'
   # 2. limit_schedule (optional) : 'limit_schedule' is the maximum limit that each schedule can add a subject
   #    example = '20' (default '10' if not filled in)

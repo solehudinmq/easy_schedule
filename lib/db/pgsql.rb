@@ -143,7 +143,7 @@ class Pgsql
     result = get_data("SELECT id, day, start_schedule, end_schedule, time_zone, inactive_date FROM schedules LIMIT #{limit} OFFSET #{offset}")
     schedules = []
     result.each do |res|
-      temp_schedule = { id: res[0], day: res[1], start_schedule: res[2], end_schedule: res[3], time_zone: res[4], inactive_date: res[5] }
+      temp_schedule = { id: res[0], day: res[1], start_schedule: res[2], end_schedule: res[3], timezone: res[4], inactive_date: res[5] }
       schedules.push(temp_schedule)
     end
 
