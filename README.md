@@ -5,7 +5,7 @@
 First of all, there are some elements that must be understood before using this library. Here is the explanation:
 - **Subject** is the name of the schedule that will be used in your system, for example if your subject name is **Doctor** then your schedule will be called **Doctor Scheduling**.
 - **Config** is a setting for data in the scheduling system. In which there are settings for the subject name, maximum limit for adding subjects to the schedule, and the timezone you use.
-- **Schedule** is your master scheduling data which you must prepare first before you can add subjects to the schedule. In it you have to specify **day**, **start_schedule**, **end_schedule**. For **timezone** it will be filled automatically based on the data in **timezone config**.
+- **Schedule** is your master scheduling data which you must prepare first before you can add subjects to the schedule. In it you have to specify **day**, **start_schedule**, **end_schedule**. For **timezone** it will be filled automatically based on the data in **timezone config**. Scheduling can be applied **Weekly** or **Daily**.
 - **Subject Schedule** is the subjects listed in the schedule. For example, the **Subject Tono** is on the **Schedule** on **Monday at 10 AM-11 AM**.
 - **Subject Cancel Schedule** is a note of a subject who is already on the schedule and is unable to attend the schedule. For example, **Subject Tono** has a **Schedule** on **Monday at 10 AM-11 AM**, but on 2025/03/17 Tono cannot attend.
 
