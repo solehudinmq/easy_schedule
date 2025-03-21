@@ -31,16 +31,26 @@ To install this library, add this to your Gemfile :
 Or if you want to download this library to your computer, do this:
 
 - Clone this library to your computer.
+
+> git clone https://github.com/solehudinmq/easy_schedule.git
+
 - Go to the **Easy Schedule** folder.
+
+> cd Easy Schedule
+
 - Run this command to create a file with the extension **.gem** : 
 
 > gem build easy_schedule.gemspec
 
 - Now in your ruby ​​application, install the **.gem** file :
 
+> cd your_ruby_app_folder
+
 > gem install ../folder_path/easy_schedule-x.x.gem
 
 Example :
+
+> cd My Scheduling App
 
 > gem install ../Easy\ Schedule/easy_schedule-1.0.gem
 
