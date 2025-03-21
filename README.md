@@ -48,12 +48,6 @@ Or if you want to download this library to your computer, do this:
 
 > gem install ../folder_path/easy_schedule-x.x.gem
 
-Example :
-
-> cd My Scheduling App
-
-> gem install ../Easy\ Schedule/easy_schedule-1.0.gem
-
 ## How to use : 
 
 After the library is installed on your Ruby system, do the following steps: 
