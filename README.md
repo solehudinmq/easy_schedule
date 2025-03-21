@@ -147,6 +147,11 @@ If you want to see the subjects data, then do this :
 
 > connection.subject_list(page, limit)
 
+
+Example : 
+
+> connection.subject_list
+
 or
 
 > connection.subject_list(1)
@@ -193,6 +198,10 @@ Note :
 If you want to see the schedules data, then do this :
 
 > connection.schedule_list(page, limit)
+
+Example :
+
+connection.schedule_list
 
 or
 
