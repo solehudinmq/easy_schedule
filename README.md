@@ -135,6 +135,11 @@ Example :
 Note : 
 
 - **bulk_data** (required) : **bulk_data** is an array of **subject** data that will be inserted into the database.
+    - **name** : is the **name** of the **subjects**.
+    - **phone_number** (unique) : is the **phone_number** of the **subjects**.
+    - **gender** : is the **gender** of the **subjects**. Here are the **gender** you can choose from : 
+        * 'MALE'
+        * 'FEMALE'
 
 ### List subjects
 
@@ -168,6 +173,20 @@ Example :
 Note : 
 
 - **bulk_data** (required) : **bulk_data** is an array of **schedule** data that will be inserted into the database.
+    - **day** : **day** is the day of the schedule. Here are the **day** you can choose from : 
+        * 'SUNDAY'
+        * 'MONDAY'
+        * 'TUESDAY'
+        * 'WEDNESDAY'
+        * 'THURSDAY'
+        * 'FRIDAY'
+        * 'SATURDAY'
+    - **start_schedule** : **start_schedule** is the **start time** of the schedule. Here are the **start_schedule** you can choose from : 
+        * '1 AM', '2 AM', ..., '12 AM'
+        * '1 PM', '2 PM', ..., '12 PM'
+    - **end_schedule** : **end_schedule** is the **end time** of the schedule. Here are the **end_schedule** you can choose from : 
+        * '1 AM', '2 AM', ..., '12 AM'
+        * '1 PM', '2 PM', ..., '12 PM'
 
 ### List schedules
 
