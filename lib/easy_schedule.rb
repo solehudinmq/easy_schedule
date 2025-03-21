@@ -58,4 +58,13 @@ class EasySchedule
   def schedule_list(page=1, limit=10)
     @connection.schedule_list(page, limit)
   end
+
+  # get configs data with pagination
+  # 1. page (optional) = page is the data on which page you want to appear
+  #    example = 2 (default 1 if not filled in)
+  # 2. limit (optional) = limit is the amount of data you want to display
+  #    example = 5 (default 10 if not filled in)
+  def config_list(page=1, limit=10)
+    @connection.config_list(page, limit)
+  end
 end

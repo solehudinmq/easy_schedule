@@ -150,6 +150,20 @@ class Pgsql
     schedules
   end
 
+  # get config data
+  def config_list(page, limit)
+    offset, limit = ofset_limit(page, limit)
+    
+    result = get_data("SELECT id, key, value, value_as FROM configs LIMIT #{limit} OFFSET #{offset}")
+    configs = []
+    result.each do |res|
+      temp_config = { id: res[0], key: res[1], value: res[2], value_as: res[3] }
+      configs.push(temp_config)
+    end
+
+    configs
+  end
+
   private
   # setup data type
     def type_setup(name, values)
