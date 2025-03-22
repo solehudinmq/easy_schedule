@@ -133,7 +133,7 @@ class Pgsql
       subjects.push(temp_subject)
     end
 
-    subjects
+    list_data(subjects, page, limit)
   end
 
   # get schedules data
@@ -147,7 +147,7 @@ class Pgsql
       schedules.push(temp_schedule)
     end
 
-    schedules
+    list_data(schedules, page, limit)
   end
 
   # get config data
@@ -161,7 +161,7 @@ class Pgsql
       configs.push(temp_config)
     end
 
-    configs
+    list_data(configs, page, limit)
   end
 
   private
@@ -228,5 +228,10 @@ class Pgsql
       end
 
       [offset, limit]
+    end
+
+    # template get list data
+    def list_data(data, page, limit)
+      { data: data, metadata: { page: page, limit: limit } }
     end
 end
